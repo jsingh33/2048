@@ -1,3 +1,9 @@
+/**
+ * Class: localStorageManager
+ *    Permanent store, if available via browser, for game information.
+ *    See:   https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+ *    If the browser does not support localStorage, then use a fakeStorage instead (lost when window closed).
+ */
 window.fakeStorage = {
   _data: {},
 

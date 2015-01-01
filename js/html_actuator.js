@@ -1,3 +1,8 @@
+/**
+ * Class: HTMLActuator
+ *    Render a view of the game model's current state
+ *    i.e., draw the game on the HTML page.
+ */
 function HTMLActuator() {
   this.tileContainer    = document.querySelector(".tile-container");
   this.scoreContainer   = document.querySelector(".score-container");
@@ -7,6 +12,9 @@ function HTMLActuator() {
   this.score = 0;
 }
 
+/** 
+ * Render the game grid and metadata to the HTML page.
+ */
 HTMLActuator.prototype.actuate = function (grid, metadata) {
   var self = this;
 
@@ -46,6 +54,10 @@ HTMLActuator.prototype.clearContainer = function (container) {
   }
 };
 
+/**
+ * Add a visual representation of the Tile to the DOM
+ * This method places the tile at its "previousPosition", then animates it to it's new position
+ */
 HTMLActuator.prototype.addTile = function (tile) {
   var self = this;
 
@@ -103,6 +115,9 @@ HTMLActuator.prototype.positionClass = function (position) {
   return "tile-position-" + position.x + "-" + position.y;
 };
 
+/**
+ * Update the score element in the DOM
+ */
 HTMLActuator.prototype.updateScore = function (score) {
   this.clearContainer(this.scoreContainer);
 

@@ -1,3 +1,7 @@
+/**
+ * Class: KeyboardInputManager
+ *    Listens for user input and triggers "events" when the user presses keys or buttons meaningful to the game.
+ */
 function KeyboardInputManager() {
   this.events = {};
 
@@ -15,6 +19,9 @@ function KeyboardInputManager() {
   this.listen();
 }
 
+/**
+ * Register an "event handler" (callback Function) for the given event
+ */
 KeyboardInputManager.prototype.on = function (event, callback) {
   if (!this.events[event]) {
     this.events[event] = [];
@@ -22,6 +29,9 @@ KeyboardInputManager.prototype.on = function (event, callback) {
   this.events[event].push(callback);
 };
 
+/**
+ * Emit the given event - call all of the event handlers previously registered for this event.
+ */
 KeyboardInputManager.prototype.emit = function (event, data) {
   var callbacks = this.events[event];
   if (callbacks) {
@@ -31,9 +41,16 @@ KeyboardInputManager.prototype.emit = function (event, data) {
   }
 };
 
+/**
+ * Listens for user input and emits an event when one occurs.
+ *   Note: map defines key codes from keyboard, see:  https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent.keyCode#Non-printable_keys_%28function_keys%29
+ *   Note: this function uses event.which to get the key code - that function is depricated: see: https://developer.mozilla.org/en-US/docs/Web/API/UIEvent.which
+ *         funciton should probably use .keycode method instead: https://developer.mozilla.org/en-US/docs/Web/API/Event.keyCode
+ */
 KeyboardInputManager.prototype.listen = function () {
   var self = this;
 
+  /******* Listen for: KEYBOARD INPUT  ******/
   var map = {
     38: 0, // Up
     39: 1, // Right
@@ -68,11 +85,14 @@ KeyboardInputManager.prototype.listen = function () {
     }
   });
 
+  /***** Listen for: HTML BUTTON CLICKS  ******/
   // Respond to button presses
   this.bindButtonPress(".retry-button", this.restart);
   this.bindButtonPress(".restart-button", this.restart);
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
 
+
+  /****** Listen for: TOUCHSCREEN GESTURES  *****/
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
   var gameContainer = document.getElementsByClassName("game-container")[0];
